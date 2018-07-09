@@ -23,7 +23,7 @@ export default class extends Component {
   }
   handleChange = name => ({ target: {value} }) => {
     this.setState({
-      form:{
+      form: {
         ...this.state.form,
         [name]: value
       }

@@ -9,7 +9,9 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CreateDialog from './Dialogs/Create'
+import CreateDialog from './Dialogs/CreateList';
+import Checkbox from '@material-ui/core/Checkbox';
+import CreateItem from './Dialogs/CreateItem';
 
 const style = {
   paper: {
@@ -38,6 +40,9 @@ export default props => (
                     <ListItem button>
                       <ListItemText primary="List1" />
                         <ListItemSecondaryAction>
+                          <CreateItem />
+                        </ListItemSecondaryAction>
+                        <ListItemSecondaryAction>
                             <IconButton aria-label="Delete" style={style.button}>
                             <DeleteIcon />
                           </IconButton>
@@ -47,6 +52,9 @@ export default props => (
                     <ListItem button divider>
                       <ListItemText primary="List2" />
                       <ListItemSecondaryAction>
+                        <CreateItem />
+                      </ListItemSecondaryAction>
+                      <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />
                         </IconButton>
@@ -54,6 +62,9 @@ export default props => (
                     </ListItem>
                     <ListItem button>
                       <ListItemText primary="List3" />
+                      <ListItemSecondaryAction>
+                        <CreateItem />
+                      </ListItemSecondaryAction>
                       <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />
@@ -63,6 +74,9 @@ export default props => (
                     <Divider light />
                     <ListItem button>
                       <ListItemText primary="List4" />
+                      <ListItemSecondaryAction>
+                        <CreateItem />
+                      </ListItemSecondaryAction>
                       <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />
@@ -79,6 +93,12 @@ export default props => (
                     <ListItem button>
                       <ListItemText primary="Item1" />
                       <ListItemSecondaryAction>
+                        <Checkbox
+                          // onChange={this.handleToggle(value)}
+                          // checked={this.state.checked.indexOf(value) !== -1}
+                        />
+                      </ListItemSecondaryAction>
+                      <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />
                         </IconButton>
@@ -88,6 +108,12 @@ export default props => (
                     <ListItem button divider>
                       <ListItemText primary="Item2" />
                       <ListItemSecondaryAction>
+                        <Checkbox
+                        // onChange={this.handleToggle(value)}
+                        // checked={this.state.checked.indexOf(value) !== -1}
+                        />
+                      </ListItemSecondaryAction>
+                      <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />
                         </IconButton>
@@ -95,6 +121,12 @@ export default props => (
                     </ListItem>
                     <ListItem button>
                       <ListItemText primary="Item3" />
+                      <ListItemSecondaryAction>
+                        <Checkbox
+                        // onChange={this.handleToggle(value)}
+                        // checked={this.state.checked.indexOf(value) !== -1}
+                        />
+                      </ListItemSecondaryAction>
                       <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />
@@ -104,6 +136,12 @@ export default props => (
                     <Divider light />
                     <ListItem button>
                       <ListItemText primary="Item4" />
+                      <ListItemSecondaryAction>
+                        <Checkbox
+                        // onChange={this.handleToggle(value)}
+                        // checked={this.state.checked.indexOf(value) !== -1}
+                        />
+                      </ListItemSecondaryAction>
                       <ListItemSecondaryAction>
                         <IconButton aria-label="Delete" style={style.button}>
                           <DeleteIcon />

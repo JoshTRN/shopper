@@ -1,12 +1,12 @@
 import React, { Component, Fragment} from 'react';
 import { Header, Footer } from './Layouts';
+import BottomNav from './Layouts/BottomNav'
 import Excercises from './Excercises';
-import Login from './Pages/Login'
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Login from './Login'
 import firebase, { auth, provider } from '../firebase/firebase'
 
 
-
+const login = true;
 
 export default class extends Component { 
 
@@ -48,12 +48,11 @@ export default class extends Component {
         })
       })
   }
-    render()
-    {
+
+    render(){
       return (
-        
-      <div>
-        <Header logout={this.logout}
+        <Fragment>
+          <Header logout={this.logout}
                 login={this.login}
                 user={this.state.user}
         />
@@ -62,8 +61,9 @@ export default class extends Component {
         : 
         <Login login={this.login}/>
       }
-      <Footer />
-      </div>
+          <BottomNav/>
+          <Footer />
+        </Fragment>
       )
     }
 }
