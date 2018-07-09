@@ -21,14 +21,14 @@ module.exports = {
                     // Create user in database.
                     db.User.create({ name: user, email: email, imgUrl: imgUrl }).then(user => {
                         // set the session user to the ID
-                        req.sessions.user = user._id
+                        //req.sessions.user = user._id
                         // send the OK
                         res.json(user);
                     })
                     // Otherwise, user exists. Send 'OK'
                 } else {
                     // set the session user to the ID
-                    req.session.user = result._id
+                    //req.session.user = result._id
                     // send the OK
                    res.json(result);
                 }
@@ -37,11 +37,12 @@ module.exports = {
 
     getAllLists: function (req, res) {
 
-        let user = req.session.user
+        //let user = req.session.user
         // find the user user
-        db.User.find({ _id: user })
+        //console.log(req.params.userid);
+        db.List.find({ _userId: req.params.userid })
             // populate his/her lists
-            .populate('lists')
+            //.populate('lists')
             .then(result => {
                 res.json(result)
             });
@@ -49,39 +50,49 @@ module.exports = {
     getList: function (req, res) {
         let list = req.params.list
         db.List.find({ _id: list })
-            .populate('items')
+            //.populate('items')
             .then(result => {
                 res.json(result)
             });
     },
     createList: function (req, res) {
-        let user = req.session.user
+        //let user = req.session.user
 
         db.List.create(req.body).then(List => {
-            console.log(List)
-            db.User.findOneAndUpdate({ _id: user }, { $push: { lists: List } }).populate('lists').then(User => {
-                res.json(User)
-            });
+            console.log(List);
+            res.json(List);
+            // db.User.findOneAndUpdate({ _userId: req._userId }, { $push: { lists: List } }).populate('lists').then(User => {
+            //     res.json(User)
+            // });
         })
     },
     addItem: function (req, res) {
 
         db.Item.create(req.body).then(Item => {
-            db.List.findOneAndUpdate({ _id: req.params.listId }, { $push: { items: Item } })
-                .populate('items')
-                .then(result => {
-                    res.json(result);
-                })
+            // db.List.findOneAndUpdate({ _id: req.params.listId }, { $push: { items: Item } })
+            //     .populate('items')
+            //     .then(result => {
+            //         res.json(result);
+            //     })
+            res.json(Item);
         });
+    },
+    getAllItems: function(req, res){
+        db.Item.find({_listId: req.params.listid}).then(Items => {
+            res.json(Items);
+        })
     },
     deleteItem: function (req, res) {
         // check if item belongs to session user
-        db.Item.deleteOne({ _id: req.params.itemId })
+        db.Item.deleteOne({ _id: req.params.itemId }).then(() => {
+            res.json({"success": "true"})
+        })
     },
     deleteList: function (req, res) {
-        db.Item.deleteOne({ _id: req.params.listId })
+        db.List.deleteOne({ _id: req.params.listId }).then(() => {
+            res.json({"sucess": "true"})
+        })
     },
-
     editItem: function(req, res) {
         db.Item.findByIdAndUpdate(req.params.itemId, req.body)
             .then(result => {
