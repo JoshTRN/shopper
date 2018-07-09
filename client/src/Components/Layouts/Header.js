@@ -28,7 +28,11 @@ function ButtonAppBar(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
             Shopper
           </Typography>
-          <Button color="inherit">Logout</Button>
+          { props.user ? 
+          <Button color="inherit" onClick={props.logout}>Logout</Button>
+        :
+        <Button color="inherit" onClick={props.login}> Log In</Button>
+        }
         </Toolbar>
       </AppBar>
     </div>
