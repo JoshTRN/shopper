@@ -4,7 +4,7 @@ import BottomNav from './Layouts/BottomNav'
 import Excercises from './Excercises';
 import Login from './Login'
 import firebase, { auth, provider } from '../firebase/firebase'
-
+import Sidebar from './Layouts/Sidebar'
 
 const login = true;
 
@@ -52,14 +52,15 @@ export default class extends Component {
     render(){
       return (
         <Fragment>
-          <Header logout={this.logout}
+          
+        {this.state.user ? 
+       
+          <Sidebar logout={this.logout}/>
+        : <div><Header 
                 login={this.login}
                 user={this.state.user}
         />
-        {this.state.user ? 
-        <Excercises />
-        : 
-        <Login login={this.login}/>
+        <Login login={this.login}/></div>
       }
           <BottomNav/>
           <Footer />
