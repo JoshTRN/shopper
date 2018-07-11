@@ -40,6 +40,9 @@ const styles = theme => ({
 
 function ButtonAppBar(props) {
   const { classes } = props;
+  //const { user } = props;
+  const userProfile = props.user;
+  //console.log(user);
 
   return (
     <div className={classes.root}>
@@ -62,11 +65,12 @@ function ButtonAppBar(props) {
         <List>
           <Button onClick={props.logout}>logout</Button>
         </List>
+        <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography noWrap>
-          <Excercises />
+          <Excercises user={userProfile}/>
         </Typography>
       </main>
     </div>
