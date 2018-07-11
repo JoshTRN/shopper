@@ -51,7 +51,9 @@ export default class extends Component {
     this.setState({
       open: false,
       form: {
-        description: ''
+        description: '',
+        listID: this.props.listID,
+        listName: this.props.listName
       }
     })
   }
