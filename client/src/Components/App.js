@@ -52,10 +52,9 @@ export default class extends Component {
     render(){
       return (
         <Fragment>
-          
         {this.state.user ? 
-       
-          <Sidebar logout={this.logout}/>
+          
+          <Sidebar logout={this.logout} user={this.state.user}/>
         : <div><Header 
                 login={this.login}
                 user={this.state.user}

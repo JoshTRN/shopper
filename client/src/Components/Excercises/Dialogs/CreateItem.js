@@ -19,7 +19,9 @@ export default class extends Component {
   state = {
     open: false,
     form: {
-      description: ''
+      description: '',
+      listID: this.props.listID,
+      listName: this.props.listName
     }
   }
   handleChange = name => ({ target: { value } }) => {
@@ -36,6 +38,24 @@ export default class extends Component {
       open: !this.state.open
     })
   }
+
+  handleFormSubmit = () => {
+    //TODO: validate
+
+    const { form } = this.state;
+
+    console.log(this.state.form);
+
+    this.props.onCreate(form);
+
+    this.setState({
+      open: false,
+      form: {
+        description: ''
+      }
+    })
+  }
+
   render() {
     const { open, form: { description } } = this.state;
 
@@ -49,7 +69,7 @@ export default class extends Component {
           onClose={this.handleToggele}
         >
           <DialogTitle id="form-dialog-title">
-            Create a new Item on List1
+            Create a new Item on "{this.props.listName}"
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -65,7 +85,11 @@ export default class extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button color="primary" variant="raised">
+            <Button 
+              color="primary" 
+              variant="raised"
+              onClick={this.handleFormSubmit}
+            >
               Create
             </Button>
           </DialogActions>

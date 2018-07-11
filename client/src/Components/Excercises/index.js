@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CreateDialog from './Dialogs/CreateList';
 import Checkbox from '@material-ui/core/Checkbox';
 import CreateItem from './Dialogs/CreateItem';
+import API from '../../Utils/API';
 
 const style = {
   paper: {
@@ -29,127 +30,165 @@ const style = {
   }
 };
 
+export default class extends Component {  
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: (this.props.user) ? this.props.user : null,
+      lists: [],
+      items: []
+    }
+    //console.log(this.props.user);
+  }
 
-export default props => (
+  componentDidMount() {
+    this.loadInitData();
+  }
+
+  loadInitData = () => {
+    let userProf = {
+       user: this.state.user.displayName,
+       email: this.state.user.email,
+       imgUrl: this.state.user.photoURL
+    }
+    console.log(userProf);
+    API.getUser(userProf)
+      .then(res => {
+        this.setState({user: res.data});
+        console.log(this.state.user);
+        API.getList(res.data._id)
+          .then(res => {
+            this.setState({lists: res.data});
+            console.log(this.state.lists);
+          })
+          .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+  }
+
+  onListCreate = (form) => {
+    console.log(form);
+    let listData = {
+      _userId: this.state.user._id,
+      name: form.description
+    }
+    API.saveList(listData)
+      .then(res => {
+        console.log(res);
+        this.loadInitData();
+      })
+  }
+  
+  deleteList = (id) => {
+    API.deleteList(id)
+      .then(res => {
+        console.log(res);
+        this.loadInitData();
+      })
+  }
+
+  loadItemForList = (id) => {
+    API.getAllitemsForList(id)
+      .then(res =>{
+        console.log(res);
+        this.setState({items: res.data})
+      })
+  }
+
+  onItemCreate = (item) => {
+    let listName = item.listName;
+    let itemDesc = item.description;
+    //let list_ID = item.listId;
+    let itemData = {
+      _listId: item.listID,
+      name: itemDesc,
+      isleNum: ""
+    };
+   // console.log(itemData._listId);
+    API.createItem(itemData)
+      .then(res => {
+        console.log(res.data._listId);
+        this.loadItemForList(res.data._listId);
+      })
+  }
+
+  render(){
+  return(
       <Grid container spacing="16">
           <Grid item sm>
               <Paper style={style.paper}>
                   <Typography variant="headline" align="right"> Add a Shopping List</Typography>
-                  <CreateDialog/>
+                  <CreateDialog
+                  onCreate={this.onListCreate}
+                  />
                   <List component="nav">
-                    <ListItem button>
-                      <ListItemText primary="List1" />
-                        <ListItemSecondaryAction>
-                          <CreateItem />
-                        </ListItemSecondaryAction>
-                        <ListItemSecondaryAction>
-                            <IconButton aria-label="Delete" style={style.button}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                    <Divider />
-                    <ListItem button divider>
-                      <ListItemText primary="List2" />
-                      <ListItemSecondaryAction>
-                        <CreateItem />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="List3" />
-                      <ListItemSecondaryAction>
-                        <CreateItem />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <Divider light />
-                    <ListItem button>
-                      <ListItemText primary="List4" />
-                      <ListItemSecondaryAction>
-                        <CreateItem />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
+                  {this.state.lists.length ? (
+                        <div>  
+                        {this.state.lists.map(list =>(
+                          <div>
+                          <ListItem button>
+                            <ListItemText primary={list.name} />
+                              <ListItemSecondaryAction>
+                                <CreateItem 
+                                  onCreate={this.onItemCreate}
+                                  listID={list._id}
+                                  listName={list.name}
+                                />
+                              </ListItemSecondaryAction>
+                              <ListItemSecondaryAction>
+                                  <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteList(list._id)}>
+                                  <DeleteIcon />
+                                </IconButton>
+                              </ListItemSecondaryAction>
+                          </ListItem>
+                          <Divider />
+                        </div>
+                      ))}
+                      </div>
+                    ): (
+                    <div>
+                      <Paper>
+                        You have not created any shopping Lists.
+                      </Paper>
+                    </div>
+                  )}
                   </List>
               </Paper>
           </Grid>
           <Grid item sm>
               <Paper style={style.paper}>
-                  <Typography variant="headline" align="right"> Items in "Lits1"</Typography>
+                  <Typography variant="headline" align="right"> Shopping Cart</Typography>
                   <List component="nav">
-                    <ListItem button>
-                      <ListItemText primary="Item1" />
-                      <ListItemSecondaryAction>
-                        <Checkbox
-                          // onChange={this.handleToggle(value)}
-                          // checked={this.state.checked.indexOf(value) !== -1}
-                        />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <Divider />
-                    <ListItem button divider>
-                      <ListItemText primary="Item2" />
-                      <ListItemSecondaryAction>
-                        <Checkbox
-                        // onChange={this.handleToggle(value)}
-                        // checked={this.state.checked.indexOf(value) !== -1}
-                        />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <ListItem button>
-                      <ListItemText primary="Item3" />
-                      <ListItemSecondaryAction>
-                        <Checkbox
-                        // onChange={this.handleToggle(value)}
-                        // checked={this.state.checked.indexOf(value) !== -1}
-                        />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                    <Divider light />
-                    <ListItem button>
-                      <ListItemText primary="Item4" />
-                      <ListItemSecondaryAction>
-                        <Checkbox
-                        // onChange={this.handleToggle(value)}
-                        // checked={this.state.checked.indexOf(value) !== -1}
-                        />
-                      </ListItemSecondaryAction>
-                      <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete" style={style.button}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                    </ListItem>
+                  <div>
+                  {this.state.items.length ? (
+                    <div>
+                      {this.state.items.map(item =>(
+                        <div>
+                        <ListItem button>
+                          <ListItemText primary={item.name} />
+                          <ListItemSecondaryAction>
+                            <Checkbox
+                              // onChange={this.handleToggle(value)}
+                              // checked={this.state.checked.indexOf(value) !== -1}
+                            />
+                          </ListItemSecondaryAction>
+                          <ListItemSecondaryAction>
+                            <IconButton aria-label="Delete" style={style.button}>
+                              <DeleteIcon />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                        <Divider />
+                        </div>
+                      ))}
+                    </div>
+                    ) : (<div><br/><Paper><Typography variant="body2" align="center">Your shopping cart is empty, please select a list</Typography></Paper></div>)
+                  }
+                  </div>
                   </List>
               </Paper>
           </Grid>
       </Grid>
-)
+    );
+  }
+}

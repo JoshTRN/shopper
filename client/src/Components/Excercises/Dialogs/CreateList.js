@@ -35,6 +35,21 @@ export default class extends Component {
       open: !this.state.open
     })
   }
+
+  handleFormSubmit = () => {
+    //TODO: validate
+
+    const { form } = this.state;
+
+    this.props.onCreate(form);
+
+    this.setState({
+      open: false,
+      form: {
+        description: ''
+      }
+    })
+  }
   render(){
     const {open, form: {description}} = this.state;
 
@@ -64,7 +79,11 @@ export default class extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button color="primary" variant="raised">
+            <Button 
+              color="primary" 
+              variant="raised"
+              onClick={this.handleFormSubmit}
+            >
               Create
             </Button>
           </DialogActions>
