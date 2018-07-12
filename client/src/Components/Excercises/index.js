@@ -92,6 +92,7 @@ export default class extends Component {
       .then(res => {
         // console.log(res);
         this.loadInitData();
+        this.setState({items: []})
       })
   }
 
