@@ -124,7 +124,7 @@ export default class extends Component {
 
   selectList = (id) => {
     this.setState({ currentList: id })
-    this.loadItemForList(this.state.currentList)
+    this.loadItemForList(id);
   }
 
   render() {
@@ -140,9 +140,9 @@ export default class extends Component {
               {this.state.lists.length ? (
                 <div>
                   {this.state.lists.map(list => (
-                    <div onClick={() => this.selectList(list._id)}>
+                    <div>
                     
-                      <ListItem button >
+                      <ListItem button onClick={() => this.selectList(list._id)}>
                         <ListItemText primary={list.name} />
                         <ListItemSecondaryAction>
                           <CreateItem
@@ -186,6 +186,7 @@ export default class extends Component {
                             <Checkbox
                             // onChange={this.handleToggle(value)}
                             // checked={this.state.checked.indexOf(value) !== -1}
+                            key={item._id}
                             />
                           </ListItemSecondaryAction>
                           <ListItemSecondaryAction>

@@ -10,6 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import Excercises from '../Excercises'
 //import { mailFolderListItems, otherMailFolderListItems } from './tileData';
+import ProfileCard from '../profile/profileCard';
 
 const drawerWidth = 240;
 
@@ -42,7 +43,7 @@ function ButtonAppBar(props) {
   const { classes } = props;
   //const { user } = props;
   const userProfile = props.user;
-  //console.log(user);
+  //console.log(userProfile);
 
   return (
     <div className={classes.root}>
@@ -64,8 +65,9 @@ function ButtonAppBar(props) {
         <Divider />
         <List>
           <Button onClick={props.logout}>logout</Button>
-        </List>
         <Divider />
+        <ProfileCard userPhotoUrl={userProfile.photoURL} userName={userProfile.displayName}/>
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />

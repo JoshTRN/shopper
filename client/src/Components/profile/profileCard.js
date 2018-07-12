@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   card: {
@@ -22,17 +23,23 @@ const styles = {
 
 function SimpleMediaCard(props) {
   const { classes } = props;
+  const user = props.userPhotoUrl;
+  const name = props.userName;
+  
+  console.log("THIS IS AN OBJECT: " + name);
   return (
-    <div>
+
+      <Grid container>
+      <Grid item sm>
       <Card className={classes.card}>
         <CardMedia
           className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
+          image={user}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="headline" component="h2">
-            User Name
+            {name}
           </Typography>
           <Typography component="p">
             Welcome back to Shopper! Please create a List or reuse a List to begin planning your next trip to the grocery store. 
@@ -47,7 +54,9 @@ function SimpleMediaCard(props) {
           </Button>
         </CardActions>
       </Card>
-    </div>
+      </Grid>
+      </Grid>
+
   );
 }
 

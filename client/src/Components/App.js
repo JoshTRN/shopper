@@ -5,12 +5,16 @@ import Excercises from './Excercises';
 import Login from './Login'
 import firebase, { auth, provider } from '../firebase/firebase'
 import Sidebar from './Layouts/Sidebar'
+import MainButtons from './profile/mainButtons'
+import ProfileCard from './profile/profileCard';
+
+
 
 const login = true;
 
 export default class extends Component { 
 
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       user: null
@@ -58,8 +62,8 @@ export default class extends Component {
         : <div><Header 
                 login={this.login}
                 user={this.state.user}
-        />
-        <Login login={this.login}/></div>
+                />
+        <ProfileCard/><MainButtons/></div>
       }
           <BottomNav/>
           <Footer />
