@@ -27,6 +27,12 @@ const style = {
   },
   text: {
     marginLeft: '100%'
+  },
+  strike: {
+    textDecorationLine: 'line-through'
+  },
+  display: {
+    display: 'block'
   }
 };
 
@@ -37,7 +43,8 @@ export default class extends Component {
       user: (this.props.user) ? this.props.user : null,
       lists: [],
       items: [],
-      currentList: null
+      currentList: null,
+      itemChecked: {}
     }
     //console.log(this.props.user);
   }
@@ -127,6 +134,15 @@ export default class extends Component {
     this.loadItemForList(id);
   }
 
+  handleToggle = (id, e) => {
+    let itemChecked = this.state.itemChecked;
+    itemChecked[id] = e.target.checked;
+    this.setState({
+      itemChecked
+    });
+    console.log(this.state.itemChecked);
+  }
+
   render() {
     return (
       <Grid container spacing="16">
@@ -141,7 +157,6 @@ export default class extends Component {
                 <div>
                   {this.state.lists.map(list => (
                     <div>
-                    
                       <ListItem button onClick={() => this.selectList(list._id)}>
                         <ListItemText primary={list.name} />
                         <ListItemSecondaryAction>
@@ -181,19 +196,20 @@ export default class extends Component {
                     {this.state.items.map(item => (
                       <div>
                         <ListItem button>
-                          <ListItemText primary={item.name} />
-                          <ListItemSecondaryAction>
-                            <Checkbox
-                            // onChange={this.handleToggle(value)}
-                            // checked={this.state.checked.indexOf(value) !== -1}
+                          <Checkbox
+                            onChange={(e) => this.handleToggle(item._id, e)}
+                            //checked={this.state.checked.indexOf(value) !== -1}
                             key={item._id}
-                            />
-                          </ListItemSecondaryAction>
+                          />
+                          <ListItemText primary={item.name} style={(this.state.itemChecked[item._id])? style.strike : style.display} />
+                          { this.state.itemChecked[item._id]==true ? (
                           <ListItemSecondaryAction>
                             <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteItem(item._id)}>
                               <DeleteIcon />
                             </IconButton>
                           </ListItemSecondaryAction>
+                          ) : <div> </div>
+                          }
                         </ListItem>
                         <Divider />
                       </div>

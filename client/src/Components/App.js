@@ -63,7 +63,7 @@ export default class extends Component {
                 login={this.login}
                 user={this.state.user}
                 />
-        <ProfileCard/><MainButtons/></div>
+        <MainButtons/></div>
       }
           <BottomNav/>
           <Footer />
