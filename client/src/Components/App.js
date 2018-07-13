@@ -7,6 +7,7 @@ import firebase, { auth, provider } from '../firebase/firebase'
 import Sidebar from './Layouts/Sidebar'
 import MainButtons from './profile/mainButtons'
 import ProfileCard from './profile/profileCard';
+import VerticalLinearStepper from './profile/stepper';
 
 
 
@@ -63,7 +64,8 @@ export default class extends Component {
                 login={this.login}
                 user={this.state.user}
                 />
-        <ProfileCard/><MainButtons/></div>
+                <VerticalLinearStepper/>
+        {/* <ProfileCard/><MainButtons/>*/}</div> 
       }
           <BottomNav/>
           <Footer />
