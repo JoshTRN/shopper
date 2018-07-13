@@ -64,7 +64,8 @@ export default class extends Component {
                 login={this.login}
                 user={this.state.user}
                 />
-                <VerticalLinearStepper/>
+        <MainButtons/></div>
+//                 <VerticalLinearStepper/>
         {/* <ProfileCard/><MainButtons/>*/}</div> 
       }
           <BottomNav/>
