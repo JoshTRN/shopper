@@ -1,16 +1,16 @@
 import React, { Component, Fragment} from 'react';
 import { Header, Footer } from './Layouts';
 import BottomNav from './Layouts/BottomNav'
-import Excercises from './Excercises';
-import Login from './Login'
+//import Excercises from './Excercises';
+//import Login from './Login'
 import firebase, { auth, provider } from '../firebase/firebase'
 import Sidebar from './Layouts/Sidebar'
 import MainButtons from './profile/mainButtons'
-import ProfileCard from './profile/profileCard';
+//import ProfileCard from './profile/profileCard';
 
 
 
-const login = true;
+//const login = true;
 
 export default class extends Component { 
 

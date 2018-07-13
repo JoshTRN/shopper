@@ -50,7 +50,7 @@ function ButtonAppBar(props) {
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
           <Typography variant="title" color="inherit" noWrap>
-            Clipped drawer
+            Shopper
           </Typography>
         </Toolbar>
       </AppBar>

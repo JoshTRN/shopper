@@ -114,7 +114,6 @@ export default class extends Component {
   }
 
   onItemCreate = (item) => {
-    let listName = item.listName;
     let itemDesc = item.description;
     //let list_ID = item.listId;
     let itemData = {
@@ -203,7 +202,7 @@ export default class extends Component {
                             key={item._id}
                           />
                           <ListItemText primary={item.name} style={(this.state.itemChecked[item._id])? style.strike : style.display} />
-                          { this.state.itemChecked[item._id]==true ? (
+                          { this.state.itemChecked[item._id]===true ? (
                           <ListItemSecondaryAction>
                             <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteItem(item._id)}>
                               <DeleteIcon />
