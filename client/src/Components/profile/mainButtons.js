@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
+//import Instructions from '../Excercises/Dialogs/Instructions';
 
 const styles = theme => ({
   root: {
@@ -79,19 +80,20 @@ const styles = theme => ({
 
 const images = [
   { //the image i saved is not working for some reason, using below web link currently 
-    url: 'https://iwellnesslife.com/wp-content/uploads/2017/02/grocery.jpg',
+    url: 'http://hazfelujitas.net/wp-content/uploads/2018/05/mizsemasters.hu_.jpg',
     //url: '/static/images/grid-list/breakfast2.jpg',
-    title: 'Groceries!',
+    title: 'Home Repairs!',
     width: '30%',
   },
   {
-    url: '/static/images/grid-list/burgers.jpg',
-    title: 'Burgers',
-    width: '30%',
+    url: 'https://iwellnesslife.com/wp-content/uploads/2017/02/grocery.jpg',
+    //url: '',
+    title: 'Groceries',
+    width: '40%',
   },
   {
-    url: '/static/images/grid-list/camera.jpg',
-    title: 'Camera',
+    url: 'https://www.bcjobs.ca/blog/wp-content/uploads/2016/10/Best-Hobbies-For-Men.jpg',
+    title: 'Hobbies!',
     width: '30%',
   },
 ];

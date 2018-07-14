@@ -23,8 +23,8 @@ function ButtonAppBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
+      <AppBar position="static" color="primary" style={{height: '80px'}}>
+        <Toolbar style={{paddingTop:'10px'}}>
           <Typography variant="title" color="inherit" className={classes.flex}>
             Shopper
           </Typography>

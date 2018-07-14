@@ -47,8 +47,8 @@ function ButtonAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="absolute" className={classes.appBar}>
-        <Toolbar>
+      <AppBar position="absolute" className={classes.appBar} style={{height: '80px'}}>
+        <Toolbar style={{paddingTop:'10px'}}>
           <Typography variant="title" color="inherit" noWrap>
             Shopper
           </Typography>
