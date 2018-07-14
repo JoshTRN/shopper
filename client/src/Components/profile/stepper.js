@@ -26,22 +26,21 @@ const styles = theme => ({
 });
 
 function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+  return ['Create an account on our SHOPPER', 'Create a shopping list', 'Create an item'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return `For each ad campaign that you create, you can control how much
-              you're willing to spend on clicks and conversions, which networks
-              and geographical locations you want your ads to show on, and more.`;
+      return `Creating an account and login back to see your shopping lists is simple. Click on the Login button.
+              our system will create an account if you do not have one already or will simply log you back in to see
+              your shopping lists`;
     case 1:
-      return 'An ad group contains one or more ads which target a shared set of keywords.';
+      return `Once logged in, simply click on "add a shopping list" button give it a name and click "create". That's it.
+              You created your first shopping list `;
     case 2:
-      return `Try out different ad text to see what brings in the most customers,
-              and learn how to enhance your ads using features like ad extensions.
-              If you run into any problems with your ads, find out how to tell if
-              they're running and how to resolve approval issues.`;
+      return `Now is time to add items to your list. Simply click on add items on your list. Provide a name for the item.
+              click create. That's it you created your first item to shop. `;
     default:
       return 'Unknown step';
   }
