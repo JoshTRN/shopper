@@ -22,7 +22,7 @@ export default {
     return axios.post("/api/api/addItem/" + itemData._listId, itemData)
   },
   // gets all items from inside a list
-  getAllitemsForList: function(id) {
+  getAllItemsForList: function(id) {
       return axios.get("/api/api/getAllItems/" + id);
   },
   deleteItem: function(id) {

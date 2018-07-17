@@ -1,24 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import { Header, Footer } from './Layouts';
-import BottomNav from './Layouts/BottomNav'
+import React, { Component } from 'react';
 import { auth, provider } from '../firebase/firebase'
 import Sidebar from './Layouts/Sidebar'
-import MainButtons from './profile/mainButtons'
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Instructions from './Exercises/Dialogs/Instructions';
-
-
-
-//const login = true;
+import Login from './Pages/login'
 
 export default class extends Component {
 
   constructor(props) {
     super();
     this.state = {
-      user: null
+      user: JSON.parse(localStorage.getItem('user'))
     }
 
     this.login = this.login.bind(this);
@@ -42,6 +32,7 @@ export default class extends Component {
           user: null
         });
       });
+      localStorage.removeItem('user');
   }
 
   login() {
@@ -51,41 +42,27 @@ export default class extends Component {
         this.setState({
           user: user
         })
-      })
+        localStorage.setItem('user', JSON.stringify(user));
+      });
+      
   }
 
 
   render() {
-    //document.body.style.backgroundColor = "gainsboro";
+
+    const user = this.state.user 
+    let page;
+
+    user ? 
+    
+    page = <Sidebar logout={this.logout} user={this.state.user} />
+    :
+    page = <Login login={this.login} user={this.user} />
+
     return (
-      <Fragment>
-        {this.state.user ?
-
-          <Sidebar logout={this.logout} user={this.state.user} />
-          : <div>
-            <Header
-              login={this.login}
-              user={this.state.user}
-            />
-            <Grid container spacing={24} style={{ paddingTop: "25px" }}>
-              <Grid item xs={12}>
-                <Paper style={{ paddingTop: "20px", paddingBottom: "20px", textAlign: 'center' }}>
-                  <Typography variant="display1" align="center" style={{ color: "black" }}>
-                    Welcome to Shopper, home for the organized shopper!
-                      </Typography>
-                  <Instructions />
-                </Paper>
-              </Grid>
-            </Grid>
-            <Grid container spacing={24} style={{ paddingTop: "25px", paddingBottom: "30px" }}>
-              <MainButtons />
-            </Grid>
-
-          </div>
-        }
-        <BottomNav />
-        <Footer position="fixed" />
-      </Fragment>
+      <div>
+        {page}
+      </div>
     )
   }
 }

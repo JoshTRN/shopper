@@ -8,9 +8,8 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import Exercises from '../Exercises'
+import Main from '../Pages/main'
 import { mailFolderListItems } from './tileData';
-// import ProfileCard from '../profile/profileCard';
 
 const drawerWidth = 240;
 
@@ -27,7 +26,7 @@ const styles = theme => ({
     zIndex: theme.zIndex.drawer + 1,
   },
   drawerPaper: {
-    position: 'fixed',
+    position: 'relative',
     width: drawerWidth,
   },
   content: {
@@ -40,10 +39,9 @@ const styles = theme => ({
 });
 
 function ButtonAppBar(props) {
+
   const { classes } = props;
-  //const { user } = props;
   const userProfile = props.user;
-  //console.log(userProfile);
 
   return (
     <div className={classes.root}>
@@ -70,14 +68,12 @@ function ButtonAppBar(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography noWrap>
-          <Exercises user={userProfile} />
+          <Main user={userProfile} />
         </Typography>
       </main>
     </div>
   );
 }
-
-
 
 ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired,

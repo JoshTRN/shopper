@@ -16,17 +16,18 @@ const styles = {
   },
   media: {
     height: 0,
-    paddingTop: '60.00% ', //'56.25%', // 16:9
-
+    paddingTop: '100.00% ',
+    borderRadius:"50%"
   },
 };
 
 function SimpleMediaCard(props) {
-  const { classes } = props;
-  const user = props.userPhotoUrl;
-  const name = props.userName;
 
-  console.log("THIS IS AN OBJECT: " + name);
+  const { classes } = props;
+  const user = props.photoURL;
+  const name = props.userName;
+  const firstName = typeof name ==="string" ? name.split(' ')[0]: ""
+  
   return (
 
     <Grid container>
@@ -41,8 +42,8 @@ function SimpleMediaCard(props) {
             <Typography gutterBottom variant="headline" component="h2">
               {name}
             </Typography>
-            <Typography component="p">
-              Welcome back to Shopper! Please create a List or reuse a List to begin planning your next trip to the grocery store.
+            <Typography style={{whiteSpace: "pre-wrap"}}>
+              Welcome back to Shopper {firstName}!  Please create a List or reuse a List to begin planning your next trip to the grocery store.
           </Typography>
           </CardContent>
           <CardActions>
