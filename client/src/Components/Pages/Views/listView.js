@@ -13,7 +13,6 @@ import API from '../../../Utils/API';
 const style = {
   paper: {
     padding: '50px',
-    // marginTop: '10px',
     marginBottom: '10px',
     height: '500px',
     overflowY: 'auto'
@@ -106,7 +105,6 @@ class Lists extends Component {
     API.deleteList(id)
       .then(res => {
         this.loadInitData();
-        this.setState({ items: [] })
       })
   }
 

@@ -10,16 +10,12 @@ class Main extends Component {
   constructor(props) {
     super(props);
 
-    
     this.state = {
       user: (this.props.user) ? this.props.user : null,
       lists: [],
-      items: [],
-      currentList: null,
-      itemChecked: {},
       updatedLists: [],
+      currentList: null,
       description: '',
-      listSelected: false,
     }
   }
 
@@ -39,7 +35,6 @@ class Main extends Component {
 
   selectList = (id, name) => {
     this.setState({ currentList:{ id: id, name: name } });
-    // this.loadItemsForList(id);
   }
 
   resetLists = () => {

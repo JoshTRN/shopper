@@ -40,11 +40,27 @@ class Items extends Component {
       itemChecked: {},
       updatedList: [],
       description: '',
-      listSelected: false,
       list: this.props.list,
     }
     this.back = this.props.back.bind(this);
   }
+
+componentDidMount() {
+    this.loadItems(this.state.list.id);
+  }
+
+  loadItems = (id) => {
+    API.getAllItemsForList(id)
+      .then(res => {
+          this.setState({ items: res.data })
+          API.getAllItemsForList(id)
+          .then(res => {
+            this.setState({ items:res.data })
+            this.setState({ updatedList: res.data })
+          })
+      })
+  }
+
 
   filterItems = (event) => {
 
@@ -59,18 +75,7 @@ class Items extends Component {
       return item.name.toLowerCase().search(
         val.toLowerCase()) !== -1;
     });
-    this.setState({ updatedLists: updatedList });
-  }
-
-  componentDidMount() {
-    this.loadItemsForList(this.state.list.id);
-  }
-
-  loadItemsForList = (id) => {
-    API.getAllItemsForList(id)
-      .then(res => {
-        this.setState({ items: res.data })
-      })
+    this.setState({ updatedList: updatedList });
   }
 
   createItem = (item) => {
@@ -84,7 +89,8 @@ class Items extends Component {
 
     API.createItem(itemData)
       .then(res => {
-        this.loadItemsForList(res.data._listId);
+        this.loadItems(res.data._listId);
+        this.setState({ description: '' })
       });
   }
 
@@ -92,7 +98,7 @@ class Items extends Component {
     API.deleteItem(id)
       .then(res => {
         console.log(res);
-        this.loadItemForList(this.state.listID)
+        this.loadItems(this.state.list.id)
       })
   }
 
@@ -123,7 +129,7 @@ class Items extends Component {
             <div>
               {this.state.items.length ? (
                 <div>
-                  {this.state.items.map(item => (
+                  {this.state.updatedList.map(item => (
                     <div>
                       <Grid container >
                         <Grid item xs={11}>
