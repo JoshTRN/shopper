@@ -33,8 +33,8 @@ class Main extends Component {
     this.setState({user: userProf})
   }
 
-  selectList = (id, name) => {
-    this.setState({ currentList:{ id: id, name: name } });
+  selectList = (id, name, storeId) => {
+    this.setState({ currentList:{ id: id, name: name, storeId: storeId } });
   }
 
   resetLists = () => {
@@ -48,6 +48,7 @@ class Main extends Component {
         user={this.state.user}
         back={this.resetLists}
         list={this.state.currentList}
+        listLocation={this.state.currentList.storeId}
       /> 
       : 
       <Lists 
@@ -63,9 +64,8 @@ class Main extends Component {
       >
         {view}
         
-        <Grid container item xs={2} justify='flex-end'>
+        <Grid container item md={2} xs={12}justify='flex-end'>
           <ProfileCard
-            style={{ position: "fixed" }}
             photoURL={this.state.user.imgUrl}
             userName={this.state.user.name}
           />

@@ -8,10 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import ReactSelectGooglePlaces from 'react-google-places';
 import Autocomplete from 'react-google-autocomplete';
 import API from '../../../Utils/API';
-// import Gapi from '../../../Utils/gapi'
+import Button from '@material-ui/core/Button';
 
 const style = {
   paper: {
@@ -102,7 +101,6 @@ class Lists extends Component {
         val.toLowerCase()) !== -1;
     });
     this.setState({ updatedLists: updatedList });
-    this.geoLocate(val)
   }
 
   deleteList = (id) => {
@@ -112,31 +110,21 @@ class Lists extends Component {
       })
   }
 
-  geoLocate = (name) => {
-
-    API.getLocation(name)
-    .then(res => {
-      console.log(res);
-    })
-     .catch(err => {
-       console.log(err);
-     })
-  }
-
   render() {
 
     return (
       <Grid item xs={6} >
-        {/* <Paper style={style.paper}> */}
+        <Paper style={style.paper}>
           <Typography variant="headline">Search or Create Shopping List by name</Typography>
+          <br/>
           <form>
-            <Autocomplete
+            {/* <Autocomplete
               style={{ width: '90%' }}
               onPlaceSelected={(place) => {
                 console.log(place);
               }}
               types={['establishment']}
-            />
+            /> */}
             <div className="form-group">
              <input
                 placeholder="Search for..."
@@ -146,12 +134,12 @@ class Lists extends Component {
                   this.filterList
                 }
               /> 
-              <button onClick={this.createList} >Create List</button>
+             
             </div>
               
              
           </form>
-
+            <Button onClick={this.createList} >Create List</Button>
             <List component="nav">
 
               {
@@ -162,7 +150,7 @@ class Lists extends Component {
                         <div>
                           <Grid container >
                             <Grid item xs={11}>
-                              <ListItem button onClick={() => this.selectList(list._id, list.name)}>
+                              <ListItem button onClick={() => this.selectList(list._id, list.name, list.storeId)}>
                                 <ListItemText primary={list.name} />
                               </ListItem>
                             </Grid>
@@ -181,12 +169,14 @@ class Lists extends Component {
                   (
                     <div>
                       <Paper>
+                        <Typography>
                         You have not created any shopping Lists.
+                        </Typography>
                         </Paper>
                     </div>
                   )}
             </List>
-        {/* </Paper> */}
+        </Paper>
       </Grid>
         )
       }

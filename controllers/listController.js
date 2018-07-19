@@ -99,7 +99,10 @@ module.exports = {
       })
   },
   editList: function (req, res) {
-    db.Item.findByIdAndUpdate(req.params.list, req.body)
+    db.List.findByIdAndUpdate(req.params.list, req.body)
+    .then(result => {
+      res.json(result);
+    })
   },
   logout: function (req, res) {
     req.session.destroy();

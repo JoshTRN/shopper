@@ -16,6 +16,8 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import API from '../../../Utils/API';
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit'
 
 const style = {
   paper: {
@@ -46,6 +48,7 @@ class Items extends Component {
       updatedList: [],
       description: '',
       list: this.props.list,
+      listLocation: this.props.listLocation
     }
     this.back = this.props.back.bind(this);
   }
@@ -115,68 +118,104 @@ class Items extends Component {
     });
   }
 
+  updateList(id, listData) {
+    API.updateList(id, listData)
+      .then(res => {
+        this.loadItems(this.state.list.id)
+      })
+  }
+
+  handlePlaceSelect(place) {
+    let address = `${place.name}, ${place.formatted_address}`
+    this.setState({ listLocation: address })
+    this.updateList(this.state.list.id, { storeId: address })
+    this.loadItems(this.state.list.id)
+  }
+
+  handleEdit() {
+    this.state.listLocation = null
+    this.updateList(this.state.list.id, { storeId: null })
+    this.loadItems(this.state.list.id)
+  }
   render() {
+
+    let address = (this.state.listLocation)
+      ? <Grid container>
+      
+        <p>Shopping at: </p>
+        <Grid item xs={11}>
+        <p style={{ whiteSpace: 'normal', width: '90%'}}>{this.state.listLocation}</p>
+        </Grid>
+        <Grid item xs={1}>
+        <IconButton onClick={() => {this.handleEdit()}}>
+          <EditIcon />
+        </IconButton>
+        </Grid>
+      </Grid>
+      : <Grid container >
+        <p>Would you like to add a store to shopping list?</p>
+        <Autocomplete
+          id="search"
+          label="Search field"
+          type="search"
+          margin="normal"
+          style={{ width: '90%' }}
+          placeholder='Search for store here'
+          onPlaceSelected={(place) => {
+            this.handlePlaceSelect(place);
+          }}
+          types={['establishment']}
+        />
+        
+      </Grid>
     return (
 
-      <Grid item xs={6} >
+      <Grid item md={6} xs={12} >
         <Paper style={style.paper}>
           <Typography variant="headline">{this.state.list.name}</Typography>
-          <Grid container >
-            {/* <TextField 
-              id="search"
-              label="Search field"
-              type="search"
-              margin="normal"
-            > */}
-            <Autocomplete
-              id="search"
-              label="Search field"
-              type="search"
-              margin="normal"
-              style={{ width: '90%' }}
-              onPlaceSelected={(place) => {
-                console.log(place);
-              }}
-              types={['establishment']}
-            />
-            {/* </TextField> */}
-          </Grid>
           <br />
+          {address}
           <form>
-            <input
+            <TextField
+              id="search"
+              label="Search for Item"
+              type="search"
+              margin="normal"
               placeholder="Search for..."
               value={this.state.description}
               ref={input => this.search = input}
               onChange={this.filterItems}
             />
-            <button onClick={this.createItem} >Add Item</button>
           </form>
+          <Button onClick={this.createItem} >Add Item</Button>
           <List component="nav">
             <div>
               {this.state.items.length ? (
                 <div>
-                  {this.state.updatedList.map(item => (
-                    <div>
-                      <Grid container >
-                        <Grid item xs={11}>
-                          <ListItem button style={{ padding: "0px" }}>
-                            <Checkbox
-                              onChange={(e) => this.handleToggle(item._id, e)}
-                              key={item._id}
-                            />
-                            <ListItemText primary={item.name} style={(this.state.itemChecked[item._id]) ? style.strike : style.display} />
-                          </ListItem>
+                  <Paper style={style.paper}>
+                    {this.state.updatedList.map(item => (
+                      <div>
+                        <Grid container >
+                          <Grid item xs={11}>
+                            <ListItem button style={{ padding: "0px" }}>
+                              <Checkbox
+                                onChange={(e) => this.handleToggle(item._id, e)}
+                                key={item._id}
+                              />
+                              <ListItemText primary={item.name} style={(this.state.itemChecked[item._id]) ? style.strike : style.display} />
+                            </ListItem>
+                          </Grid>
+                          <Grid container alignItems="center" item xs={1}>
+                            <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteItem(item._id)}>
+                              <DeleteIcon />
+                            </IconButton>
+                          </Grid>
+                          <Divider />
                         </Grid>
-                        <Grid container alignItems="center" item xs={1}>
-                          <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteItem(item._id)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </Grid>
-                        <Divider />
-                      </Grid>
 
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                  </Paper>
                 </div>
               ) : (
                   <div>
@@ -188,10 +227,9 @@ class Items extends Component {
                   </div>)
               }
             </div>
+            <Button color="primary" onClick={this.back} > {"<"}-- Back to lists</Button>
           </List>
-
         </Paper>
-        <button onClick={this.back} > {"<"}-- Back</button>
       </Grid>
     )
   }

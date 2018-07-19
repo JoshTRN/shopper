@@ -28,23 +28,8 @@ export default {
   deleteItem: function(id) {
       return axios.delete("/api/api/deleteItem/" + id)
   },
-  getLocation: function (name) {
-    
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-
-        let apiKey = "AIzaSyCW61taUbxNOQxHhdLBcp3SU_kI0lCV-VQ"
-        let pos = {
-          lat: position.coords.latitude,
-          long: position.coords.longitude
-        }
-        let geoQuery = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${pos.lat},${pos.long}&radius=30000&name=${name}&key=${apiKey}`;
-
-      axios.get(geoQuery).then(res => {
-        console.log(res);
-        return res 
-      })
-      })
-    }
+  updateList: function(id, listData) {
+    console.log(listData);
+    return axios.put('/api/api/lists/' + id, listData)
   }
 };
