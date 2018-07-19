@@ -8,7 +8,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+// import ReactSelectGooglePlaces from 'react-google-places';
+import Autocomplete from 'react-google-autocomplete';
 import API from '../../../Utils/API';
+// import Gapi from '../../../Utils/gapi'
 
 const style = {
   paper: {
@@ -99,6 +102,7 @@ class Lists extends Component {
         val.toLowerCase()) !== -1;
     });
     this.setState({ updatedLists: updatedList });
+    this.geoLocate(val)
   }
 
   deleteList = (id) => {
@@ -108,60 +112,84 @@ class Lists extends Component {
       })
   }
 
+  geoLocate = (name) => {
+
+    API.getLocation(name)
+    .then(res => {
+      console.log(res);
+    })
+     .catch(err => {
+       console.log(err);
+     })
+  }
+
   render() {
 
     return (
       <Grid item xs={6} >
-        <Paper style={style.paper}>
+        {/* <Paper style={style.paper}> */}
           <Typography variant="headline">Search or Create Shopping List by name</Typography>
           <form>
-            <input
-              placeholder="Search for..."
-              value={this.state.description}
-              ref={input => this.search = input}
-              onChange={this.filterList}
+            <Autocomplete
+              style={{ width: '90%' }}
+              onPlaceSelected={(place) => {
+                console.log(place);
+              }}
+              types={['establishment']}
             />
-            <button onClick={this.createList} >Create List</button>
+            <div className="form-group">
+             <input
+                placeholder="Search for..."
+                value={this.state.description}
+                ref={input => this.search = input}
+                onChange={
+                  this.filterList
+                }
+              /> 
+              <button onClick={this.createList} >Create List</button>
+            </div>
+              
+             
           </form>
 
-          <List component="nav">
+            <List component="nav">
 
-            {
-              this.state.lists.length ?
-                (
-                  <div>
-                    {this.state.updatedLists.map(list => (
-                      <div>
-                        <Grid container >
-                          <Grid item xs={11}>
-                            <ListItem button onClick={() => this.selectList(list._id, list.name)}>
-                              <ListItemText primary={list.name} />
-                            </ListItem>
+              {
+                this.state.lists.length ?
+                  (
+                    <div>
+                      {this.state.updatedLists.map(list => (
+                        <div>
+                          <Grid container >
+                            <Grid item xs={11}>
+                              <ListItem button onClick={() => this.selectList(list._id, list.name)}>
+                                <ListItemText primary={list.name} />
+                              </ListItem>
+                            </Grid>
+                            <Grid item xs={1}>
+                              <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteList(list._id)}>
+                                <DeleteIcon />
+                              </IconButton>
+                            </Grid>
+                            <Divider />
                           </Grid>
-                          <Grid item xs={1}>
-                            <IconButton aria-label="Delete" style={style.button} onClick={() => this.deleteList(list._id)}>
-                              <DeleteIcon />
-                            </IconButton>
-                          </Grid>
-                          <Divider />
-                        </Grid>
-                      </div>
-                    ))}
-                  </div>
-                )
-                :
-                (
-                  <div>
-                    <Paper>
-                      You have not created any shopping Lists.
+                        </div>
+                      ))}
+                    </div>
+                  )
+                  :
+                  (
+                    <div>
+                      <Paper>
+                        You have not created any shopping Lists.
                         </Paper>
-                  </div>
-                )}
-          </List>
-        </Paper>
+                    </div>
+                  )}
+            </List>
+        {/* </Paper> */}
       </Grid>
-    )
-  }
-}
-
+        )
+      }
+    }
+    
 export default Lists;

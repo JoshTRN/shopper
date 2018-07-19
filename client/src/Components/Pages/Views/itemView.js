@@ -10,6 +10,11 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Checkbox from '@material-ui/core/Checkbox';
+import Autocomplete from 'react-google-autocomplete';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 import API from '../../../Utils/API';
 
 const style = {
@@ -45,17 +50,17 @@ class Items extends Component {
     this.back = this.props.back.bind(this);
   }
 
-componentDidMount() {
+  componentDidMount() {
     this.loadItems(this.state.list.id);
   }
 
   loadItems = (id) => {
     API.getAllItemsForList(id)
       .then(res => {
-          this.setState({ items: res.data })
-          API.getAllItemsForList(id)
+        this.setState({ items: res.data })
+        API.getAllItemsForList(id)
           .then(res => {
-            this.setState({ items:res.data })
+            this.setState({ items: res.data })
             this.setState({ updatedList: res.data })
           })
       })
@@ -116,6 +121,27 @@ componentDidMount() {
       <Grid item xs={6} >
         <Paper style={style.paper}>
           <Typography variant="headline">{this.state.list.name}</Typography>
+          <Grid container >
+            {/* <TextField 
+              id="search"
+              label="Search field"
+              type="search"
+              margin="normal"
+            > */}
+            <Autocomplete
+              id="search"
+              label="Search field"
+              type="search"
+              margin="normal"
+              style={{ width: '90%' }}
+              onPlaceSelected={(place) => {
+                console.log(place);
+              }}
+              types={['establishment']}
+            />
+            {/* </TextField> */}
+          </Grid>
+          <br />
           <form>
             <input
               placeholder="Search for..."
@@ -133,8 +159,8 @@ componentDidMount() {
                     <div>
                       <Grid container >
                         <Grid item xs={11}>
-                          <ListItem button style={{padding: "0px"}}>
-                            <Checkbox 
+                          <ListItem button style={{ padding: "0px" }}>
+                            <Checkbox
                               onChange={(e) => this.handleToggle(item._id, e)}
                               key={item._id}
                             />
@@ -170,5 +196,9 @@ componentDidMount() {
     )
   }
 }
+
+Items.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default Items;
