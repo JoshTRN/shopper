@@ -115,7 +115,7 @@ class Lists extends Component {
     return (
       <Grid item xs={6} >
         <Paper style={style.paper}>
-          <Typography variant="headline">Search or Create Shopping List by name</Typography>
+          <Typography style={{whiteSpace: 'normal'}} variant="headline">Search or Create Shopping List by name</Typography>
           <br/>
           <form>
             {/* <Autocomplete
