@@ -11,7 +11,6 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
   },
 });
-
 function PaperSheet(props) {
   const { classes } = props;
 

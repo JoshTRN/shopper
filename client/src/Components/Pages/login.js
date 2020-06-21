@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import Instructions from '../Exercises/Dialogs/Instructions';
 
 const Login = (props) => (
-
     <div>
         <Header login={props.login}
         />
@@ -27,7 +26,6 @@ const Login = (props) => (
         </Grid>
         <BottomNav />
         <Footer />
-
     </div>
 )
 

@@ -1,35 +1,13 @@
 import axios from "axios";
 
 export default {
-  // Gets List
-  getList: function(id) {
-    return axios.get("/api/api/lists/" + id);
-  },
-  // find or add user
-  getUser: function(userData){
-      return axios.post("/api/api/users", userData)
-  }, 
-  // Save a list
-  saveList: function(listData) {
-    return axios.post("/api/api/createList", listData);
-  },
-  // Deletes the list with the given id
-  deleteList: function(id) {
-    return axios.delete("/api/api/deleteList/" + id);
-  },
-  // creates an item inside a list
-  createItem: function(itemData) {
-    return axios.post("/api/api/addItem/" + itemData._listId, itemData)
-  },
-  // gets all items from inside a list
-  getAllItemsForList: function(id) {
-      return axios.get("/api/api/getAllItems/" + id);
-  },
-  deleteItem: function(id) {
-      return axios.delete("/api/api/deleteItem/" + id)
-  },
-  updateList: function(id, listData) {
-    console.log(listData);
-    return axios.put('/api/api/lists/' + id, listData)
-  }
-};
+  getUser: userData => axios.post(`/api/users`, userData), 
+  getList: id =>  axios.get(`/api/lists/${id}`),
+  getAllLists: id => axios.get(`/api/lists/getAll/${id}`),
+  saveList: listData => axios.post(`/api/lists/create`, listData),
+  updateList: (id, listData) => axios.put(`/api/lists/${id}`, listData),
+  deleteList: id => axios.delete(`/api/lists/` + id),
+  getAllItemsForList: id => axios.get(`/api/items/getAll/${id}`),
+  createItem: itemData => axios.post(`/api/items/add/${itemData._listId}`, itemData),
+  deleteItem: id => axios.delete(`/api/items/${id}`),
+}

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-
 import Lists from './Views/listView';
 import ProfileCard from '../profile/profileCard';
 import Items from './Views/itemView';
 
 class Main extends Component {
-
   constructor(props) {
     super(props);
-
     this.state = {
       user: (this.props.user) ? this.props.user : null,
       lists: [],
@@ -24,8 +21,7 @@ class Main extends Component {
   }
 
   loadInitData = () => {
-
-    let userProf = {
+    const userProf = {
       name: this.state.user.displayName,
       email: this.state.user.email,
       imgUrl: this.state.user.photoURL
@@ -42,19 +38,17 @@ class Main extends Component {
   }
 
   render() {
-
-    let view = this.state.currentList ? 
-      <Items 
-        user={this.state.user}
-        back={this.resetLists}
-        list={this.state.currentList}
-        listLocation={this.state.currentList.storeId}
-      /> 
-      : 
-      <Lists 
-      user={this.state.user} 
-      selectList={this.selectList}
-      />
+	const view = this.state.currentList
+		? <Items 
+			user={this.state.user}
+			back={this.resetLists}
+			list={this.state.currentList}
+			listLocation={this.state.currentList.storeId}
+		/> 
+		: <Lists
+			user={this.state.user}
+			selectList={this.selectList}
+		/>
 
     return (
       <Grid
@@ -63,7 +57,6 @@ class Main extends Component {
         justify='space-around'
       >
         {view}
-        
         <Grid container item md={2} xs={12}justify='flex-end'>
           <ProfileCard
             photoURL={this.state.user.imgUrl}

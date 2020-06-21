@@ -8,7 +8,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Autocomplete from 'react-google-autocomplete';
 import API from '../../../Utils/API';
 import Button from '@material-ui/core/Button';
 
@@ -48,24 +47,18 @@ class Lists extends Component {
     this.loadInitData();
   }
 
-  loadInitData = () => {
-    let userProf = {
+  loadInitData = async () => {
+    const userProf = {
       user: this.state.user.displayName,
       email: this.state.user.email,
       imgUrl: this.state.user.photoURL
     }
 
-    API.getUser(userProf)
-      .then(res => {
-        this.setState({ user: res.data });
-        API.getList(res.data._id)
-          .then(res => {
-            this.setState({ lists: res.data });
-            this.setState({ updatedLists: res.data });
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(err => console.log(err));
+	const {data: user} = await API.getUser(userProf)
+	const { data: lists } = await API.getAllLists(user._id)
+	console.log(lists)
+	
+	this.setState({ lists, user, updatedLists: lists})
   }
 
   createList = (form) => {
@@ -118,21 +111,12 @@ class Lists extends Component {
           <Typography style={{whiteSpace: 'normal'}} variant="headline">Search or Create Shopping List by name</Typography>
           <br/>
           <form>
-            {/* <Autocomplete
-              style={{ width: '90%' }}
-              onPlaceSelected={(place) => {
-                console.log(place);
-              }}
-              types={['establishment']}
-            /> */}
             <div className="form-group">
              <input
                 placeholder="Search for..."
                 value={this.state.description}
                 ref={input => this.search = input}
-                onChange={
-                  this.filterList
-                }
+                onChange={ this.filterList }
               /> 
              
             </div>
