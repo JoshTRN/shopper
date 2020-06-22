@@ -61,50 +61,40 @@ class Lists extends Component {
 	this.setState({ lists, user, updatedLists: lists})
   }
 
-  createList = (form) => {
-    form.preventDefault();
+  createList = async e => {
+    e.preventDefault();
 
-    if (this.state.description !== '') {
+	if (!this.state.description) alert('please add description')
+	
+	const listData = {
+		_userId: this.state.user._id,
+		name: this.state.description
+	}
 
-      let listData = {
-        _userId: this.state.user._id,
-        name: this.state.description
-      }
-
-      API.saveList(listData)
-        .then(res => {
-          this.loadInitData();
-        })
-    } else {
-      alert('please add description')
-    }
+	await API.saveList(listData)
+	this.loadInitData();
     this.setState({ description: '' })
   }
 
-  filterList = (event) => {
-    const val = event.target.value;
+  filterList = e => {
+    const val = e.target.value;
     this.setState({
       description: val
     });
 
-    var updatedList = this.state.lists;
-
-    updatedList = updatedList.filter(function (item) {
+    const updatedLists = this.state.lists.filter(function (item) {
       return item.name.toLowerCase().search(
         val.toLowerCase()) !== -1;
     });
     this.setState({ updatedLists: updatedList });
   }
 
-  deleteList = (id) => {
-    API.deleteList(id)
-      .then(res => {
-        this.loadInitData();
-      })
+  deleteList = async id => {
+    await API.deleteList(id)
+	this.loadInitData();
   }
 
   render() {
-
     return (
       <Grid item xs={6} >
         <Paper style={style.paper}>
@@ -118,16 +108,11 @@ class Lists extends Component {
                 ref={input => this.search = input}
                 onChange={ this.filterList }
               /> 
-             
             </div>
-              
-             
           </form>
             <Button onClick={this.createList} >Create List</Button>
             <List component="nav">
-
-              {
-                this.state.lists.length ?
+              { this.state.lists.length ?
                   (
                     <div>
                       {this.state.updatedLists.map(list => (
@@ -148,9 +133,7 @@ class Lists extends Component {
                         </div>
                       ))}
                     </div>
-                  )
-                  :
-                  (
+                  ) : (
                     <div>
                       <Paper>
                         <Typography>
