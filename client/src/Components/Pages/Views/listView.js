@@ -56,7 +56,6 @@ class Lists extends Component {
 
 	const {data: user} = await API.getUser(userProf)
 	const { data: lists } = await API.getAllLists(user._id)
-	console.log(lists)
 	
 	this.setState({ lists, user, updatedLists: lists})
   }
@@ -77,16 +76,9 @@ class Lists extends Component {
   }
 
   filterList = e => {
-    const val = e.target.value;
-    this.setState({
-      description: val
-    });
-
-    const updatedLists = this.state.lists.filter(function (item) {
-      return item.name.toLowerCase().search(
-        val.toLowerCase()) !== -1;
-    });
-    this.setState({ updatedLists: updatedList });
+    const description = e.target.value;
+    const updatedLists = this.state.lists.filter(list => list.name.toLowerCase().includes(description.toLowerCase()));
+    this.setState({ description, updatedLists });
   }
 
   deleteList = async id => {

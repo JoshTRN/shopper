@@ -54,9 +54,7 @@ function ButtonAppBar(props) {
       </AppBar>
       <Drawer
         variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        classes={{ paper: classes.drawerPaper, }}
       >
         <div className={classes.toolbar} />
         <List>{mailFolderListItems}</List>
@@ -65,10 +63,10 @@ function ButtonAppBar(props) {
           <Button onClick={props.logout}>logout</Button>
         </List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
+      <main className={ classes.content }>
+        <div className={ classes.toolbar } />
         <Typography noWrap>
-          <Main user={userProfile} />
+          <Main user={ userProfile } />
         </Typography>
       </main>
     </div>

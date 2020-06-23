@@ -21,20 +21,20 @@ class Main extends Component {
   }
 
   loadInitData = () => {
-    const userProf = {
+    const user = {
       name: this.state.user.displayName,
       email: this.state.user.email,
       imgUrl: this.state.user.photoURL
     }
-    this.setState({user: userProf})
+    this.setState({ user })
   }
 
   selectList = (id, name, storeId) => {
-    this.setState({ currentList:{ id: id, name: name, storeId: storeId } });
+    this.setState({ currentList: { id, name, storeId } });
   }
 
   resetLists = () => {
-    this.setState({currentList: null });
+    this.setState({ currentList: null });
   }
 
   render() {

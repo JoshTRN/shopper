@@ -47,27 +47,19 @@ function getStepContent(step) {
 }
 
 class VerticalLinearStepper extends React.Component {
-  state = {
-    activeStep: 0,
-  };
+  state = { activeStep: 0 };
 
   handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }));
+	const activeStep = this.state.activeStep + 1;
+    this.setState({ activeStep });
   };
 
   handleBack = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1,
-    }));
+	const activeStep = this.state.activeStep - 1;
+    this.setState({ activeStep });
   };
 
-  handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
-  };
+  handleReset = () => this.setState({ activeStep: 0 });
 
   render() {
     const { classes } = this.props;
@@ -109,7 +101,7 @@ class VerticalLinearStepper extends React.Component {
         </Stepper>
         {activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>All steps completed - you&quot;re finished</Typography>
+            <Typography>All steps completed - you're finished</Typography>
             <Button onClick={this.handleReset} className={classes.button}>
               Reset
             </Button>

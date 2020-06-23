@@ -13,9 +13,7 @@ export default class extends Component {
 
 	componentDidMount() {
 		auth.onAuthStateChanged(user => {
-			if (user) {
-				this.setState({ user });
-			}
+			if (user) this.setState({ user }); 
 		});
 	}
 

@@ -1,20 +1,14 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import ProfileCard from '../../profile/stepper';
+import ProfileCard from '../profile/stepper';
 
 class AlertDialog extends React.Component {
-  state = {
-    open: false,
-  };
+  state = { open: false };
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+  handleClickOpen = () => this.setState({ open: true });
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  handleClose = () => this.setState({ open: false });
 
   render() {
     return (
@@ -26,7 +20,7 @@ class AlertDialog extends React.Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <ProfileCard/>
+          <ProfileCard />
         </Dialog>
       </div>
     );

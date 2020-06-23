@@ -22,25 +22,21 @@ const styles = {
 };
 
 function SimpleMediaCard(props) {
-
-  const { classes } = props;
-  const user = props.photoURL;
-  const name = props.userName;
-  const firstName = typeof name ==="string" ? name.split(' ')[0]: ""
+  const { classes, userName, photoURL } = props;
+  const firstName = typeof userName === 'string' ? userName.split(' ')[0]: ''
   
   return (
-
     <Grid container>
       <Grid item sm>
         <Card className={classes.card}>
           <CardMedia
             className={classes.media}
-            image={user}
+            image={photoURL}
             title="Contemplative Reptile"
           />
           <CardContent>
             <Typography gutterBottom variant="headline" component="h2">
-              {name}
+              {userName}
             </Typography>
             <Typography style={{whiteSpace: "pre-wrap"}}>
               Welcome back to Shopper {firstName}!  Please create a List or reuse a List to begin planning your next trip to the grocery store.
@@ -57,7 +53,6 @@ function SimpleMediaCard(props) {
         </Card>
       </Grid>
     </Grid>
-
   );
 }
 

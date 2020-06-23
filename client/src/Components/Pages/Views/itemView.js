@@ -98,9 +98,9 @@ class Items extends Component {
   }
 
   handlePlaceSelect(place) {
-    const address = `${place.name}, ${place.formatted_address}`;
-    this.setState({ listLocation: address });
-    this.updateList(this.state.list.id, { storeId: address });
+    const listLocation = `${place.name}, ${place.formatted_address}`;
+    this.setState({ listLocation });
+    this.updateList(this.state.list.id, { storeId: listLocation });
     this.loadItems(this.state.list.id);
   }
 
@@ -136,9 +136,7 @@ class Items extends Component {
           margin="normal"
           style={{ width: "90%" }}
           placeholder="Search for store here"
-          onPlaceSelected={(place) => {
-            this.handlePlaceSelect(place);
-          }}
+          onPlaceSelected={(place) => this.handlePlaceSelect(place) }
           types={["establishment"]}
         />
       </Grid>
